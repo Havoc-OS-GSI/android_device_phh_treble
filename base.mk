@@ -8,12 +8,14 @@ PRODUCT_COPY_FILES := \
 	frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
 	frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 
-#Use a more decent APN config
-PRODUCT_COPY_FILES += \
-	device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml
-
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += device/phh/treble/sepolicy
-PRODUCT_PACKAGE_OVERLAYS += device/phh/treble/overlay
+
+PRODUCT_PACKAGE_OVERLAYS += \
+	device/phh/treble/overlay \
+	device/phh/treble/overlay-havoc
+
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
+	device/phh/treble/overlay-havoc/frameworks/base
 
 $(call inherit-product, vendor/hardware_overlay/overlay.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
@@ -30,11 +32,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 	ro.build.version.security_patch=$(PLATFORM_SECURITY_PATCH) \
 	ro.adb.secure=0 \
 	ro.logd.auditd=true
-	
+
 #Huawei HiSuite (also other OEM custom programs I guess) it's of no use in AOSP builds
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 	persist.sys.usb.config=adb \
-	ro.cust.cdrom=/dev/null	
+	ro.cust.cdrom=/dev/null
 
 #VNDK config files
 PRODUCT_COPY_FILES += \
