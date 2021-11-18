@@ -65,6 +65,9 @@ for part in a ab;do
 				fi
 
 				target="treble_${arch}_${part_suffix}${apps_suffix}${su_suffix}"
+				if [ "$1" == "havoc" ];then
+					target="havoc_${target}"
+				fi
 
 				baseArch="$arch"
 				if [ "$arch" = "a64" ];then
